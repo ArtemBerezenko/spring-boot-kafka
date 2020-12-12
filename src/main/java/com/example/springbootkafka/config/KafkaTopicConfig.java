@@ -16,6 +16,18 @@ public class KafkaTopicConfig {
     @Value(value = "${kafka.bootstrapAddress}")
     private String bootstrapAddress;
 
+    @Value(value = "${message.topic.name}")
+    private String messageTopicName;
+
+    @Value(value = "${partitioned.topic.name}")
+    private String partitionedTopicName;
+
+    @Value(value = "${filtered.topic.name}")
+    private String filteredTopicName;
+
+    @Value(value = "${greeting.topic.name}")
+    private String greetingTopicName;
+
     @Bean
     public KafkaAdmin kafkaAdmin() {
         Map<String, Object> configs = new HashMap<>();
@@ -25,6 +37,22 @@ public class KafkaTopicConfig {
 
     @Bean
     public NewTopic springKafkaTopic() {
-        return new NewTopic("spring-kafka-topic", 1, (short) 1);
+        return new NewTopic(messageTopicName, 1, (short) 1);
     }
+
+    @Bean
+    public NewTopic topic2() {
+        return new NewTopic(partitionedTopicName, 6, (short) 1);
+    }
+
+    @Bean
+    public NewTopic topic3() {
+        return new NewTopic(filteredTopicName, 1, (short) 1);
+    }
+
+    @Bean
+    public NewTopic topic4() {
+        return new NewTopic(greetingTopicName, 1, (short) 1);
+    }
+
 }
